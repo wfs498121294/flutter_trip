@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter_trip_study/common/device.dart';
+import 'package:flutter_trip_study/dao/home_dao.dart';
+import 'package:flutter_trip_study/model/home_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,6 +15,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   var navAlpha = 1.0;
+   HomeModel? homeModel;
+
+  loadData(){
+    HomeDao().fetch().then((value) {
+      print(value);
+      setState(() {
+        homeModel = value;
+      });
+    }
+    );
+  }
 
   _onScroll(offset) {
     if (kDebugMode) {
@@ -29,6 +42,14 @@ class _HomePageState extends State<HomePage> {
       navAlpha = alpha;
     });
   }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,9 +75,9 @@ class _HomePageState extends State<HomePage> {
                         height: hcFitWidth(160),
                         child: const SwiperBanner()
                     ),
-                    const SizedBox(
+                     SizedBox(
                       height: 900,
-                      child: ListTile(title: Text("测试")),
+                      child: ListTile(title: Text(homeModel?.config.searchUrl ?? "")),
                     )
                   ],
                 ),
@@ -70,7 +91,7 @@ class _HomePageState extends State<HomePage> {
               child: Center(
                 child: Padding(
                   padding: EdgeInsets.only(top: statusBarHeight),
-                  child: Text("首页"),
+                  child: const Text("首页"),
                 ),
               ),
             )

@@ -12,7 +12,7 @@ class _TravelPageState extends State<TravelPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body:Center(
-        child: Text("首页"),
+        child: Text("旅拍"),
       ),
     );
   }

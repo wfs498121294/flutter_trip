@@ -12,7 +12,7 @@ class _MinePageState extends State<MinePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body:Center(
-        child: Text("首页"),
+        child: Text("我的"),
       ),
     );
   }
