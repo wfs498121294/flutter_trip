@@ -4,7 +4,6 @@ import 'package:flutter_trip_study/pages/mine_page.dart';
 import 'package:flutter_trip_study/pages/search_page.dart';
 import 'package:flutter_trip_study/pages/travel_page.dart';
 
-
 class TabNavigator extends StatefulWidget {
   const TabNavigator({Key? key}) : super(key: key);
 

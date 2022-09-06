@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter_trip_study/common/device.dart';
 import 'package:flutter_trip_study/dao/home_dao.dart';
+import 'package:flutter_trip_study/model/common_model.dart';
 import 'package:flutter_trip_study/model/home_model.dart';
+import 'package:flutter_trip_study/widgets/local_nav.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,28 +18,34 @@ class _HomePageState extends State<HomePage> {
 
   var navAlpha = 1.0;
    HomeModel? homeModel;
+   List <CommonModel> localNavList = [];
 
-  loadData(){
-    HomeDao().fetch().then((value) {
-      print(value);
-      setState(() {
-        homeModel = value;
-      });
+  loadData() async{
+    try{
+    HomeModel response = await HomeDao().fetch();
+        setState(() {
+          homeModel = response;
+          localNavList = response.localNavList;
+        });
     }
-    );
+    catch(e){
+      print(e);
+    }
+
   }
 
   _onScroll(offset) {
     if (kDebugMode) {
       print("偏移量->$offset");
     }
-    double alpha = offset / kMinInteractiveDimension+statusBarHeight;
+    double alpha = offset / (getAppBarHeight()+statusBarHeight);
     if(alpha <0){
       alpha = 0;
     }else if(alpha > 1){
       alpha = 1;
     }
 
+    print("alpha->$alpha");
     setState(() {
       navAlpha = alpha;
     });
@@ -53,7 +61,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      backgroundColor: const Color(0xf2f2f2),
       body:Stack(
         children: [
           MediaQuery.removePadding(
@@ -75,9 +83,13 @@ class _HomePageState extends State<HomePage> {
                         height: hcFitWidth(160),
                         child: const SwiperBanner()
                     ),
-                     SizedBox(
+                     Padding(
+                         padding: const EdgeInsets.fromLTRB(7, 4, 7, 4),
+                       child: LocalNav(localNavList: localNavList),
+                     ),
+                     const SizedBox(
                       height: 900,
-                      child: ListTile(title: Text(homeModel?.config.searchUrl ?? "")),
+                      child: ListTile(title: Text("test")),
                     )
                   ],
                 ),
@@ -91,7 +103,7 @@ class _HomePageState extends State<HomePage> {
               child: Center(
                 child: Padding(
                   padding: EdgeInsets.only(top: statusBarHeight),
-                  child: const Text("首页"),
+                  child:  const Text("首页"),
                 ),
               ),
             )
