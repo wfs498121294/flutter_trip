@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_trip_study/model/common_model.dart';
-import 'package:flutter_trip_study/widgets/webview.dart';
 import 'package:flutter_trip_study/widgets/webview1.dart';
 
 class LocalNav extends StatelessWidget {

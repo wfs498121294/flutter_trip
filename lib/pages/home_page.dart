@@ -5,7 +5,10 @@ import 'package:flutter_trip_study/common/device.dart';
 import 'package:flutter_trip_study/dao/home_dao.dart';
 import 'package:flutter_trip_study/model/common_model.dart';
 import 'package:flutter_trip_study/model/home_model.dart';
+import 'package:flutter_trip_study/widgets/gird_nav.dart';
 import 'package:flutter_trip_study/widgets/local_nav.dart';
+
+import '../model/grid_nav_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,7 +21,8 @@ class _HomePageState extends State<HomePage> {
 
   var navAlpha = 1.0;
    HomeModel? homeModel;
-   List <CommonModel> localNavList = [];
+   GridNavModel? gridNavModel;
+  List <CommonModel> localNavList = [];
 
   loadData() async{
     try{
@@ -26,6 +30,7 @@ class _HomePageState extends State<HomePage> {
         setState(() {
           homeModel = response;
           localNavList = response.localNavList;
+          gridNavModel = homeModel?.gridNav;
         });
     }
     catch(e){
@@ -36,7 +41,7 @@ class _HomePageState extends State<HomePage> {
 
   _onScroll(offset) {
     if (kDebugMode) {
-      print("偏移量->$offset");
+      // print("偏移量->$offset");
     }
     double alpha = offset / (getAppBarHeight()+statusBarHeight);
     if(alpha <0){
@@ -86,6 +91,10 @@ class _HomePageState extends State<HomePage> {
                      Padding(
                          padding: const EdgeInsets.fromLTRB(7, 4, 7, 4),
                        child: LocalNav(localNavList: localNavList),
+                     ),
+                     Padding(
+                       padding: const EdgeInsets.fromLTRB(7,0,7,4),
+                       child: GridNav(gridNavModel: gridNavModel),
                      ),
                      const SizedBox(
                       height: 900,

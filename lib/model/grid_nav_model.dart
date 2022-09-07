@@ -1,9 +1,9 @@
 import 'common_model.dart';
 
 class GridNavModel{
-  final GridNavItem hotel;
-  final GridNavItem flight;
-  final GridNavItem travel;
+   GridNavItem? hotel;
+   GridNavItem? flight;
+   GridNavItem? travel;
 
   GridNavModel({
     required this.hotel,
