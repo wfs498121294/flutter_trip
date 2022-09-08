@@ -7,6 +7,7 @@ import 'package:flutter_trip_study/model/common_model.dart';
 import 'package:flutter_trip_study/model/home_model.dart';
 import 'package:flutter_trip_study/widgets/gird_nav.dart';
 import 'package:flutter_trip_study/widgets/local_nav.dart';
+import 'package:flutter_trip_study/widgets/sub_nav.dart';
 
 import '../model/grid_nav_model.dart';
 
@@ -19,10 +20,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  var navAlpha = 1.0;
+  var navAlpha = 0.0;
    HomeModel? homeModel;
    GridNavModel? gridNavModel;
-  List <CommonModel> localNavList = [];
+   List <CommonModel> subNavList = [];
+   List <CommonModel> localNavList = [];
 
   loadData() async{
     try{
@@ -31,6 +33,7 @@ class _HomePageState extends State<HomePage> {
           homeModel = response;
           localNavList = response.localNavList;
           gridNavModel = homeModel?.gridNav;
+          subNavList = response.subNavList;
         });
     }
     catch(e){
@@ -49,8 +52,6 @@ class _HomePageState extends State<HomePage> {
     }else if(alpha > 1){
       alpha = 1;
     }
-
-    print("alpha->$alpha");
     setState(() {
       navAlpha = alpha;
     });
@@ -96,6 +97,11 @@ class _HomePageState extends State<HomePage> {
                        padding: const EdgeInsets.fromLTRB(7,0,7,4),
                        child: GridNav(gridNavModel: gridNavModel),
                      ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(7,0,7,4),
+                      child: SubNav(subNavList: subNavList),
+                    ),
+
                      const SizedBox(
                       height: 900,
                       child: ListTile(title: Text("test")),

@@ -69,12 +69,14 @@ class GridNav extends StatelessWidget {
   //最左边的item
   _mainItem(BuildContext context, CommonModel model){
 
-    print(model);
     return _wrapGesture(context, Stack(
       alignment: AlignmentDirectional.topCenter,
       children: [
-        Image.network(model.icon ?? "",fit: BoxFit.contain,height: 88,width: 120,alignment: AlignmentDirectional.bottomEnd,),
-        Text(model.title ?? "",style: const TextStyle(fontSize: 14,color: Colors.white))
+        Image.network(model.icon,fit: BoxFit.contain,height: 88,width: 120,alignment: AlignmentDirectional.bottomEnd,),
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Text(model.title ?? "",style: const TextStyle(fontSize: 14,color: Colors.white)),
+        )
       ],
     ), model);
   }

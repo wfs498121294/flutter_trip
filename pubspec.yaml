@@ -40,7 +40,8 @@ dependencies:
   http: ^0.13.5
   shared_preferences: ^2.0.15
   webview_flutter: ^3.0.4
-  flutter_webview_plugin: ^0.4.0
+#  flutter_webview_plugin: ^0.4.0
+  dokit: ^0.8.2-nullsafety.10
 
 dev_dependencies:
   flutter_test:
