@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -14,13 +15,8 @@ class _SearchPageState extends State<SearchPage> {
       appBar: AppBar(
         title: Text("下拉刷新"),
       ),
-      body:RefreshIndicator(
-        //圆圈进度颜色
-        color: Colors.blue,
-        //下拉停止的距离
-        displacement: 44.0,
-        //背景颜色
-        backgroundColor: Colors.grey[200],
+      body:LiquidPullToRefresh(
+
         onRefresh: () async {
           //模拟网络请求
           await Future.delayed(Duration(milliseconds: 2000));

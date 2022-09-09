@@ -16,6 +16,7 @@ import 'package:flutter_trip_study/widgets/sub_nav.dart';
 import '../model/grid_nav_model.dart';
 import '../model/sales_box_model.dart';
 import '../widgets/webview1.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -57,7 +58,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _handleRefresh();
   }
-  Future _handleRefresh() async{
+  Future <void> _handleRefresh() async{
     _loading = true;
     try{
       HomeModel response = await HomeDao().fetch();
@@ -89,7 +90,7 @@ class _HomePageState extends State<HomePage> {
         itemCount: bannerList.length,
         itemBuilder: (BuildContext context, int index) {
           return Image.network(
-            bannerList![index].icon,
+            bannerList[index].icon,
             fit: BoxFit.cover,
           );
         },
@@ -145,12 +146,7 @@ class _HomePageState extends State<HomePage> {
             MediaQuery.removePadding(
                 context: context,
                 removeTop: true,
-
-                child:  RefreshIndicator(
-                  //圆圈进度颜色
-                  color: Colors.red,
-                  //下拉停止的距离
-                  displacement: 44.0,
+                child:  LiquidPullToRefresh(
                   onRefresh:_handleRefresh,
                   child: NotificationListener<ScrollNotification>(
                     onNotification: (ScrollNotification scrollNotification){
@@ -164,19 +160,19 @@ class _HomePageState extends State<HomePage> {
                   ),
                 )
             ),
-            Opacity(
-                opacity: navAlpha,
-              child: Container(
-                height: kMinInteractiveDimension+statusBarHeight,
-                decoration: const BoxDecoration(color: Colors.white),
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: statusBarHeight),
-                    child:  const Text("首页"),
-                  ),
-                ),
-              )
-            )
+            // Opacity(
+            //     opacity: navAlpha,
+            //   child: Container(
+            //     height: kMinInteractiveDimension+statusBarHeight,
+            //     decoration: const BoxDecoration(color: Colors.white),
+            //     child: Center(
+            //       child: Padding(
+            //         padding: EdgeInsets.only(top: statusBarHeight),
+            //         child:  const Text("首页"),
+            //       ),
+            //     ),
+            //   )
+            // )
           ],
         ),
         isLoading: _loading,
