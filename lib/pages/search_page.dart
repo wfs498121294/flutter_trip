@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_trip_study/widgets/search_bar.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class SearchPage extends StatefulWidget {
@@ -13,28 +14,17 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("下拉刷新"),
+        title: const Text("下拉刷新"),
       ),
-      body:LiquidPullToRefresh(
-
-        onRefresh: () async {
-          //模拟网络请求
-          await Future.delayed(Duration(milliseconds: 2000));
-          //结束刷新
-          return Future.value(true);
-        },
-        //一个列表
-        child: ListView.builder(
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              height: 66,
-              child: Text("测试数据"),
-            );
-          },
-          //列表数据源数量
-          itemCount: 100,
-        ),
-      ),
+      body:Column(
+        children:  [
+          SearchBar(hideLeft: true, hint: "请输入关键词", defaultText: "天安门", searchBarType: SearchBarType.normal,onChange: _onTextChange,)
+        ],
+      )
     );
+  }
+
+  _onTextChange(text){
+    print(text);
   }
 }

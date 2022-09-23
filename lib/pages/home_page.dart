@@ -11,12 +11,15 @@ import 'package:flutter_trip_study/widgets/gird_nav.dart';
 import 'package:flutter_trip_study/widgets/loading_container.dart';
 import 'package:flutter_trip_study/widgets/local_nav.dart';
 import 'package:flutter_trip_study/widgets/sales_box.dart';
+import 'package:flutter_trip_study/widgets/search_bar.dart';
 import 'package:flutter_trip_study/widgets/sub_nav.dart';
 
 import '../model/grid_nav_model.dart';
 import '../model/sales_box_model.dart';
 import '../widgets/webview1.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+
+const Search_default_text = "网红打卡地 景点 酒店 美食";
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -79,6 +82,39 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Widget get _appBar{
+    return Column(
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0x66000000), Colors.transparent],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter
+            )
+          ),
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+            height: 80,
+            decoration: BoxDecoration(
+              color: Color.fromARGB((navAlpha * 255).toInt(), 255, 255, 255)
+            ),
+            child: SearchBar(hint: "hint", defaultText:Search_default_text,searchBarType: navAlpha > 0.2 ? SearchBarType.homeLight : SearchBarType.home,inputBoxClick: _jumpToSearch,speakClick: _jumpToSpeak,onLeftBtnClick: _leftBtnClick,),
+          )
+        ),
+        Container(
+          height: navAlpha > 0.2 ? 0.5 : 0,
+          decoration: const BoxDecoration(
+            boxShadow: [BoxShadow(
+              color: Colors.black12,
+              blurRadius: 0.5
+            )]
+          ),
+        )
+      ],
+    );
+
+  }
   // banner 轮播图
   Widget get _banner {
     return Container(
@@ -136,6 +172,18 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  _jumpToSearch(){
+
+  }
+
+  _jumpToSpeak(){
+
+  }
+
+  _leftBtnClick(){
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -173,7 +221,8 @@ class _HomePageState extends State<HomePage> {
             //     ),
             //   )
             // )
-          ],
+            _appBar
+          ]
         ),
         isLoading: _loading,
       )
